@@ -21,9 +21,14 @@ export class AppComponent implements OnInit {
     ['', '', '', '', '', '', '', '', '', ''],
   ];
 
+  semaphores: any = {
+    gameWon: false,
+    onePlayerPopUp: false,
+    twoPlayerPopUp: false
+  }
+
   currentMove: string = 'x';
-  gameWon: boolean = false;
-  onePlayerPopUp: boolean = false;
+
 
   constructor(private appService: AppService) {
   }
@@ -33,13 +38,18 @@ export class AppComponent implements OnInit {
 
   chooseX(): void {
     this.currentMove = 'x';
-    this.onePlayerPopUp = false;
+    this.semaphores.onePlayerPopUp = false;
+    this.resetBoard();
   }
-
 
   chooseO(): void {
     this.currentMove = 'o';
-    this.onePlayerPopUp = false;
+    this.semaphores.onePlayerPopUp = false;
+    this.resetBoard();
+  }
+
+  twoPlayers(): void {
+    this.resetBoard();
   }
 
   placeItemOn(i: number, j: number): void {
@@ -48,7 +58,7 @@ export class AppComponent implements OnInit {
     }
     this.board[i][j] = this.currentMove;
     if (this.appService.checkWinner(this.board)) {
-      this.gameWon = true;
+      this.semaphores.gameWon = true;
       return;
     }
 
@@ -68,7 +78,7 @@ export class AppComponent implements OnInit {
   }
 
   openOnePlayerPopUp(): void {
-    this.onePlayerPopUp = true;
+    this.semaphores.onePlayerPopUp = true;
   }
 
 }

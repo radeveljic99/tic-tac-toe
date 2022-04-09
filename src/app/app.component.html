@@ -1,64 +1,75 @@
-<div
-  class="flex flex-col items-center justify-center">
-  <h1 class="text-red mt-10 text-white font-bold text-3xl h-full">TIC TAC TOE 10x10</h1>
-</div>
-<div class="flex justify-center items-center w-full">
-  <button
-    (click)="openOnePlayerPopUp()"
-    class="bg-white py-2 px-4 my-5 rounded-md hover:scale-110 hover:bg-red-500 hover:text-white text-purple-900 font-bold">
-    ONE PLAYER
-  </button>
-  <button
-    class="ml-4 bg-white py-2 px-4 my-5 rounded-md hover:scale-110 hover:bg-red-500 hover:text-white text-purple-900 font-bold">
-    TWO PLAYERS
-  </button>
-</div>
+<div class="flex flex-col justify-center items-center">
+  <div
+    class="flex flex-col items-center justify-center">
+    <h1 class="mt-10 text-white text-center font-bold text-3xl h-full">
+      TIC TAC TOE 10x10
+    </h1>
+  </div>
+  <div class="flex justify-center items-center w-full">
+    <button
+      (click)="openOnePlayerPopUp()"
+      class="bg-white py-2 px-4 my-5 rounded-md hover:scale-110 hover:bg-red-500 hover:text-white text-purple-900 font-bold">
+      ONE PLAYER
+    </button>
+    <button
+      (click)="twoPlayers()"
+      class="ml-4 bg-white py-2 px-4 my-5 rounded-md hover:scale-110 hover:bg-red-500 hover:text-white text-purple-900 font-bold">
+      TWO PLAYERS
+    </button>
+  </div>
 
-<div class="flex justify-center items-center mb-20">
-  <div class="grid grid-rows-10 bg-purple-200 rounded-xl border-8 border-white overflow-hidden">
-    <div *ngFor="let row of board; let i = index" class="flex flex-row">
-      <div *ngFor="let element of row; let j = index"
-           class="bg-blue-200 w-11 h-11 border overflow-hidden border-blue-400 rounded-md text-black flex justify-center items-center ">
-        <button (click)="placeItemOn(i,j)"
-                class="w-full h-full text-center flex justify-center items-center text-5xl text-purple-900 pb-2.5">
-          {{ element }}
-        </button>
+  <div class="flex justify-center items-center mb-20">
+    <div class="grid grid-rows-10 bg-purple-200 rounded-xl border-8 border-white overflow-hidden">
+      <div *ngFor="let row of board; let i = index" class="flex flex-row">
+        <div *ngFor="let element of row; let j = index"
+             class="bg-blue-200 w-8 h-8 sm:w-11 sm:h-11 border overflow-hidden border-blue-400 rounded-md text-black flex justify-center items-center">
+          <button (click)="placeItemOn(i,j)"
+                  class="w-full h-full text-center flex justify-center items-center text-3xl sm:text-5xl text-purple-900 pb-2.5">
+            {{ element }}
+          </button>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 
-<div *ngIf="gameWon"
-     class="w-full absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center">
-  <div class="flex relative flex-col bg-purple-900 border-2 border-white rounded-xl z-100">
-    <div class="w-full flex justify-center items-center h-11">
-      <p class="text-center p-4 text-20 text-white font-bold">
-        {{ currentMove === 'x' ? 'X' : 'O' }} IS WINNER</p>
+  <div *ngIf="semaphores.gameWon"
+       class="w-full absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center">
+    <div class="flex relative flex-col bg-purple-900 border-2 border-white rounded-xl z-100">
+      <div class="w-full flex justify-end items-center">
+        <button class="text-white text-14 mt-2 mr-4" (click)="semaphores.gameWon = false">
+          X
+        </button>
+      </div>
+      <div class="w-full flex justify-center items-center h-11">
+        <p class="text-center p-4 text-20 text-white font-bold">
+          {{ currentMove === 'x' ? 'X' : 'O' }} IS WINNER</p>
+      </div>
     </div>
+
   </div>
-</div>
 
-<div *ngIf="onePlayerPopUp"
-     class="w-full absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center">
-  <div class="flex relative flex-col bg-purple-900 border-2 border-white rounded-xl z-100 space-x-2">
-    <button class="absolute right-0 top-0 w-10 h-10 font-bold" (click)="onePlayerPopUp = false">
-      <p class="text-white hover:text-red">X</p>
-    </button>
-    <div class="w-full flex justify-center items-center h-11">
-      <p class="text-center text-20 text-white font-bold">CHOOSE PLAYER</p>
-    </div>
-    <div class="flex flex-row">
-      <button
-        (click)="chooseX()"
-        class="mx-2 bg-white py-2 px-4 my-4 rounded-md hover:scale-110 hover:bg-red-500 hover:text-white text-purple-900 font-bold">
-        PLAY WITH X
+  <div *ngIf="semaphores.onePlayerPopUp"
+       class="w-full absolute inset-0 bg-black bg-opacity-40 flex justify-center items-center">
+    <div class="flex relative flex-col bg-purple-900 border-2 border-white rounded-xl z-100 space-x-2">
+      <button class="absolute right-0 top-0 w-10 h-10 font-bold" (click)="semaphores.onePlayerPopUp = false">
+        <p class="text-white hover:text-red">X</p>
       </button>
-      <button
-        (click)="chooseO()"
-        class="mx-2 bg-white py-2 px-4 my-4 rounded-md hover:scale-110 hover:bg-red-500 hover:text-white text-purple-900 font-bold">
-        PLAY WITH O
-      </button>
+      <div class="w-full flex justify-center items-center h-11">
+        <p class="text-center text-20 text-white font-bold">CHOOSE PLAYER</p>
+      </div>
+      <div class="flex flex-row">
+        <button
+          (click)="chooseX()"
+          class="mx-2 bg-white py-2 px-4 my-4 rounded-md hover:scale-110 hover:bg-red-500 hover:text-white text-purple-900 font-bold">
+          PLAY WITH X
+        </button>
+        <button
+          (click)="chooseO()"
+          class="mx-2 bg-white py-2 px-4 my-4 rounded-md hover:scale-110 hover:bg-red-500 hover:text-white text-purple-900 font-bold">
+          PLAY WITH O
+        </button>
+      </div>
     </div>
   </div>
 </div>
