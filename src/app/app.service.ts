@@ -61,6 +61,41 @@ export class AppService {
   }
 
   checkMainDiagonal(board: string [][], sign: string): boolean {
+    let n = board[0].length;
+    let count = 1;
+    let countIncreasing = true;
+    for (let i = 0; i < 2 * n; i++) {
+      let numberOfSignsInRow = 0;
+      for (let j = 0; j < count; j++) {
+        let row, col;
+        if (i < n - 1) {
+          row = n - i - 1 + j;
+          col = j;
+        } else if (i === n - 1) {
+          row = j;
+          col = j;
+        } else {
+          row = j;
+          col = i - n + j + 1;
+        }
+        if (board[row][col] === sign) {
+          numberOfSignsInRow++;
+        } else {
+          numberOfSignsInRow = 0;
+        }
+        if (numberOfSignsInRow === 5) {
+          return true;
+        }
+      }
+      if (count < n && countIncreasing) {
+        count++;
+      } else if (count === n) {
+        countIncreasing = false;
+        count--;
+      } else {
+        count--;
+      }
+    }
     return false;
   }
 
@@ -83,6 +118,7 @@ export class AppService {
     }
     return false;
   }
+
 
   checkWinner(board: string[][]): boolean {
     if (this.checkRows(board, 'x')) {
