@@ -23,8 +23,7 @@ export class AppComponent implements OnInit {
 
   semaphores: any = {
     gameWon: false,
-    onePlayerPopUp: false,
-    twoPlayerPopUp: false
+    onePlayerPopUp: false
   }
 
   currentMove: string = 'x';
@@ -48,9 +47,6 @@ export class AppComponent implements OnInit {
     this.resetBoard();
   }
 
-  twoPlayers(): void {
-    this.resetBoard();
-  }
 
   placeItemOn(i: number, j: number): void {
     if (this.board[i][j] !== '') {
